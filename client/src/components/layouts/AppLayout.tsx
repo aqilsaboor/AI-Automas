@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import Navbar from "../ui/Navbar";
-import FooterSection from "./FooterSection";
+// import Navbar from "../ui/Navbar";
+// import FooterSection from "./FooterSection";
 import Hero from "./Hero";
+import AboutUs from "./AboutUs";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -16,12 +17,13 @@ const LandingPage = () => {
     >
 
       {/* Header */}
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* Hero Section */}
-      <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-        <Hero/>
-      </motion.div>
+      <Hero />
+
+      <AboutUs />
+
 
       {/* About Us Section */}
       {/* <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
