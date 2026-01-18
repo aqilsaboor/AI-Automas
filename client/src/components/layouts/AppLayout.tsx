@@ -4,6 +4,7 @@ import Navbar from "../ui/Navbar";
 import Hero from "./Hero";
 import AboutUs from "./AboutUs";
 import Services from "./Services";
+import Results from "./Results";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -27,6 +28,7 @@ const LandingPage = () => {
 
       <Services />
 
+      <Results />
 
       {/* About Us Section */}
       {/* <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
