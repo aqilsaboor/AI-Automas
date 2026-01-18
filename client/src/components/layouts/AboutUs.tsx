@@ -1,5 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import {
+  primaryGradient,
+  primaryGradientText,
+  pinkToPurple,
+  softCardGradient,
+  particleGradient,
+} from "../ui/gradients";
+
 
 // Floating Particles Component
 const FloatingParticles = () => {
@@ -21,7 +29,8 @@ const FloatingParticles = () => {
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
-            background: 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)',
+            background: particleGradient,
+
           }}
           animate={{
             y: [0, -30, 0],
@@ -69,12 +78,7 @@ const AnimatedWord: React.FC<AnimatedWordProps> = ({
         ease: [0.22, 1, 0.36, 1],
       }}
       className={gradient ? "inline-block pb-[0.1em]" : "inline"}
-      style={gradient ? {
-        background: 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundClip: 'text',
-      } : {}}
+      style={gradient ? primaryGradientText : {}}
     >
       {children}
     </motion.span>
@@ -182,7 +186,7 @@ const AboutUs = () => {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="mt-12 sm:mt-16 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom"
+            className="mt-12 sm:mt-16 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full ${pinkToPurple}"
           />
 
           {/* Animated Stats or Features */}
@@ -205,17 +209,15 @@ const AboutUs = () => {
                 className="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
               >
                 <motion.div
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-br from-pinkcustom/5 to-purplecustom/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className={`absolute inset-0 rounded-2xl ${softCardGradient}`}
+
                 />
                 <div className="relative z-10">
                   <h3 
                     className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-3"
-                    style={{
-                      background: 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}
+    
+                    style={primaryGradientText}
+
                   >
                     {item.number}
                   </h3>
@@ -226,7 +228,7 @@ const AboutUs = () => {
                 
                 {/* Floating particle inside card */}
                 <motion.div
-                  className="absolute top-4 right-4 w-2 h-2 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom"
+                  className="absolute top-4 right-4 w-2 h-2 rounded-full ${pinkToPurple}"
                   animate={{
                     y: [0, -10, 0],
                     opacity: [0.3, 1, 0.3],
