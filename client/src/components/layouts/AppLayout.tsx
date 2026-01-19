@@ -5,7 +5,7 @@ import Hero from "./Hero";
 import AboutUs from "./AboutUs";
 import Services from "./Services";
 import Results from "./Results";
-import Sponsers from "./Sponsers";
+import Sponsers from "./Sponsors";
 import FooterSection from "./FooterSection";
 
 const fadeInUp = {

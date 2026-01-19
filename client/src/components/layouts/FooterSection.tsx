@@ -10,6 +10,20 @@ const primaryGradientText = {
   backgroundClip: "text",
 };
 const particleGradient = "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)";
+const companyLinks = [
+{ label: 'About Us', href: '/aboutus' },
+{ label: 'Services', href: '/services' },
+{ label: 'Results', href: '/results' },
+{ label: 'Sponsors', href: '/sponsors' },
+];
+
+const socialLinks = [
+  { label: 'LinkedIn', href: 'https://linkedin.com' },
+  { label: 'Twitter', href: 'https://twitter.com' },
+  { label: 'GitHub', href: 'https://github.com' },
+  { label: 'Email', href: 'mailto:contact@yourcompany.com' },
+];
+
 
 // Floating Particles Component
 const FloatingParticles = () => {
@@ -21,6 +35,9 @@ const FloatingParticles = () => {
     duration: 8 + Math.random() * 6,
     scale: 0.5 + Math.random() * 1,
   }));
+
+
+
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -198,24 +215,26 @@ const FooterPage = () => {
                   <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 sm:mb-6">
                     Company
                   </h3>
+                  
                   <ul className="space-y-2 sm:space-y-3">
-                    {['About Us', 'Services', 'Results', 'Sponsers'].map((item, index) => (
-                      <motion.li
-                        key={item}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                  {companyLinks.map((item, index) => (
+                    <motion.li
+                      key={item.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <a
+                        href={item.href}
+                        className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
                       >
-                        <a
-                          href="#"
-                          className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
-                        >
-                          {item}
-                        </a>
-                      </motion.li>
-                    ))}
-                  </ul>
+                        {item.label}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+
                 </div>
 
                 {/* Social & Contact */}
@@ -224,23 +243,26 @@ const FooterPage = () => {
                     Connect
                   </h3>
                   <ul className="space-y-2 sm:space-y-3">
-                    {['LinkedIn', 'Twitter', 'GitHub', 'Email'].map((item, index) => (
-                      <motion.li
-                        key={item}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                      >
-                        <a
-                          href="#"
-                          className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
+                      {socialLinks.map((item, index) => (
+                        <motion.li
+                          key={item.label}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                          {item}
-                        </a>
-                      </motion.li>
-                    ))}
-                  </ul>
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
+                          >
+                            {item.label}
+                          </a>
+                        </motion.li>
+                      ))}
+                    </ul>
+
                 </div>
               </div>
 
@@ -258,13 +280,13 @@ const FooterPage = () => {
                   </p>
                   <div className="flex gap-4 sm:gap-6">
                     <a
-                      href="#"
+                      href="/aboutus"
                       className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300"
                     >
                       Privacy Policy
                     </a>
                     <a
-                      href="#"
+                      href="/services"
                       className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300"
                     >
                       Terms of Service

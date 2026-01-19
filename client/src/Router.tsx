@@ -2,6 +2,10 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Applayout from "./components/layouts/AppLayout";
 import NoMatch from "./pages/NoMatch";
 import Error500 from "./pages/Error500";
+import AboutUs from "./components/layouts/AboutUs";
+import Services from "./components/layouts/Services";
+import Results from "./components/layouts/Results";
+import Sponsors from "./components/layouts/Sponsors";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +20,22 @@ export const router = createBrowserRouter([
     path: "*",
     element: <NoMatch />,
   },
+  {
+    path: "/aboutus",
+    element: <AboutUs />,
+  },
+  {
+    path: "/services",
+    element: <Services />,
+  },
+  {
+    path: "/results",
+    element: <Results />,
+  },
+  {
+    path: "/sponsors",
+    element: <Sponsors />,
+  }
 ], {
   basename: global.basename
 });
