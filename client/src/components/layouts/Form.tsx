@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import axios from 'axios';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,12 @@ export default function ContactForm() {
     services: '',
     message: ''
   });
+
+const [notification, setNotification] = useState<{
+  type: 'success' | 'error' | '';
+  message: string;
+}>({ type: '', message: '' });
+
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -70,10 +77,49 @@ export default function ContactForm() {
     setOpenDropdown(null);
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    alert('Form submitted successfully! Check console for data.');
-  };
+  const handleSubmit = async () => {
+  try {
+    const response = await axios.post("http://localhost:5000/api/contact", formData, {
+      headers: { "Content-Type": "application/json" }
+    });
+
+    console.log("Server Response:", response.data);
+
+    setNotification({
+      type: 'success',
+      message: 'Form submitted successfully!'
+    });
+
+    // Optional: Reset form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      role: '',
+      companyName: '',
+      companyWebsite: '',
+      companySize: '',
+      annualRevenue: '',
+      projectBudget: '',
+      services: '',
+      message: ''
+    });
+
+    // Hide notification after 3 seconds
+    setTimeout(() => setNotification({ type: '', message: '' }), 3000);
+
+  } catch (error: any) {
+    console.error("Error submitting form:", error);
+    setNotification({
+      type: 'error',
+      message: 'Something went wrong. Please try again.'
+    });
+
+    setTimeout(() => setNotification({ type: '', message: '' }), 3000);
+  }
+};
+
+
 
   const toggleDropdown = (dropdown: string) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
@@ -81,6 +127,16 @@ export default function ContactForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+
+      {/* ===== Notification ===== */}
+    {notification.type && (
+      <div className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 px-6 py-4 rounded-lg shadow-xl text-white text-lg font-medium 
+        ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'} animate-fade-in-out`}>
+        {notification.message}
+      </div>
+    )}
+    {/* ====================== */}
+
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 sm:mb-12">
