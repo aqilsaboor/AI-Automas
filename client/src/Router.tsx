@@ -6,6 +6,7 @@ import AboutUs from "./components/layouts/AboutUs";
 import Services from "./components/layouts/Services";
 import Results from "./components/layouts/Results";
 import Sponsors from "./components/layouts/Sponsors";
+import Form from "./components/layouts/Form";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
   {
     path: "/sponsors",
     element: <Sponsors />,
+  },
+  {
+    path: "/form",
+    element: <Form />,
   }
 ], {
   basename: global.basename
