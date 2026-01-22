@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Phone, X } from 'lucide-react';
 
 
 interface StarLayerProps {
@@ -90,6 +91,8 @@ const StarsBackground: React.FC<StarsBackgroundProps> = ({ children }) => {
 const Hero = () => {
   const navigate = useNavigate();
   const [currentWord, setCurrentWord] = useState(0);
+  const [showCallModal, setShowCallModal] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const words = ['Software', 'Platform', 'Solution', 'Tool'];
   
   useEffect(() => {
@@ -99,9 +102,125 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleCall = () => {
+    if (phoneNumber.trim()) {
+      window.location.href = `tel:${phoneNumber}`;
+    }
+  };
+
   return (
     <StarsBackground>
       <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Floating Call Button */}
+        <motion.button
+          onClick={() => setShowCallModal(true)}
+          className="fixed top-6 right-6 z-50 p-4 bg-gradient-to-r from-pinkcustom to-purplecustom text-white rounded-full shadow-lg"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          animate={{
+            boxShadow: [
+              '0 0 20px rgba(226, 101, 227, 0.4)',
+              '0 0 40px rgba(226, 101, 227, 0.6)',
+              '0 0 20px rgba(226, 101, 227, 0.4)',
+            ],
+          }}
+          transition={{
+            boxShadow: {
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
+        >
+          <motion.div
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Phone size={24} />
+          </motion.div>
+        </motion.button>
+
+        {/* Call Modal */}
+        <AnimatePresence>
+          {showCallModal && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+                onClick={() => setShowCallModal(false)}
+              />
+              
+              {/* Modal Content */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4"
+              >
+                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                  {/* Header */}
+                  <div className="bg-gradient-to-r from-pinkcustom to-purplecustom p-6 text-white relative">
+                    <button
+                      onClick={() => setShowCallModal(false)}
+                      className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 bg-white/20 rounded-full">
+                        <Phone size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold">Schedule a Call</h3>
+                        <p className="text-sm text-white/80">Enter your number below</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className="p-6 space-y-4">
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="+1 (555) 000-0000"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pinkcustom focus:border-transparent outline-none transition-all"
+                      />
+                    </div>
+
+                    <motion.button
+                      onClick={handleCall}
+                      disabled={!phoneNumber.trim()}
+                      className="w-full py-3 bg-gradient-to-r from-pinkcustom to-purplecustom text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: phoneNumber.trim() ? 1.02 : 1 }}
+                      whileTap={{ scale: phoneNumber.trim() ? 0.98 : 1 }}
+                    >
+                      Call Now
+                    </motion.button>
+
+                    <p className="text-xs text-gray-500 text-center">
+                      We'll connect you with our team right away
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
         {/* Gradient Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
