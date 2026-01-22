@@ -7,6 +7,7 @@ import Services from "./Services";
 import Results from "./Results";
 import Sponsers from "./Sponsors";
 import FooterSection from "./FooterSection";
+import WhatWeOffers from "./WhatWeOffers";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -27,6 +28,8 @@ const LandingPage = () => {
       <Hero />
 
       <AboutUs />
+
+      <WhatWeOffers />
 
       <Services />
 
