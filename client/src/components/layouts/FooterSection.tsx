@@ -13,15 +13,18 @@ const particleGradient = "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)";
 const companyLinks = [
 { label: 'About Us', href: '/aboutus' },
 { label: 'Services', href: '/services' },
+{ label: 'WhatWeDo', href: '/whatwedo' },
 { label: 'Results', href: '/results' },
 { label: 'Sponsors', href: '/sponsors' },
 ];
+const phoneNumber = "+1 234 567 8900";
 
 const socialLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com' },
   { label: 'Twitter', href: 'https://twitter.com' },
   { label: 'GitHub', href: 'https://github.com' },
   { label: 'Email', href: 'mailto:contact@yourcompany.com' },
+  { label: 'Call', type: 'call' },
 ];
 
 
@@ -71,6 +74,16 @@ const FloatingParticles = () => {
 const FooterPage = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const [showNumber, setShowNumber] = React.useState(false);
+const [copied, setCopied] = React.useState(false);
+
+const copyNumber = async () => {
+  await navigator.clipboard.writeText(phoneNumber);
+  setCopied(true);
+  setTimeout(() => setCopied(false), 1500);
+};
+
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 overflow-hidden">
@@ -243,25 +256,53 @@ const FooterPage = () => {
                     Connect
                   </h3>
                   <ul className="space-y-2 sm:space-y-3">
-                      {socialLinks.map((item, index) => (
-                        <motion.li
-                          key={item.label}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                        >
-                          <a
-                            href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
-                          >
-                            {item.label}
-                          </a>
-                        </motion.li>
-                      ))}
-                    </ul>
+  {socialLinks.map((item, index) => (
+    <motion.li
+      key={item.label}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      {item.type === "call" ? (
+        <button
+          onClick={() => setShowNumber(!showNumber)}
+          className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300"
+        >
+          {showNumber ? "Hide Number" : "Call"}
+        </button>
+      ) : (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm sm:text-base text-gray-600 hover:text-pink-500 transition-colors duration-300 inline-block"
+        >
+          {item.label}
+        </a>
+      )}
+    </motion.li>
+  ))}
+</ul>
+{showNumber && (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="mt-4 p-3 rounded-lg bg-white shadow-md border border-gray-200 max-w-xs"
+  >
+    <p className="text-sm text-gray-700 mb-2">
+      📞 {phoneNumber}
+    </p>
+
+    <button
+      onClick={copyNumber}
+      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90 transition"
+    >
+      {copied ? "Copied!" : "Copy Number"}
+    </button>
+  </motion.div>
+)}
+
 
                 </div>
               </div>

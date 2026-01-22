@@ -3,11 +3,11 @@ import Navbar from "../ui/Navbar";
 // import FooterSection from "./FooterSection";
 import Hero from "./Hero";
 import AboutUs from "./AboutUs";
-import Services from "./Services";
+import WhatWeDo from "./WhatWeDo";
 import Results from "./Results";
 import Sponsers from "./Sponsors";
 import FooterSection from "./FooterSection";
-import WhatWeOffers from "./WhatWeOffers";
+import Services from "./Services";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -29,9 +29,9 @@ const LandingPage = () => {
 
       <AboutUs />
 
-      <WhatWeOffers />
-
       <Services />
+
+      <WhatWeDo />
 
       <Results />
 

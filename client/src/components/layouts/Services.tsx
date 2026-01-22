@@ -1,15 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-
-// Gradient definitions
-const primaryGradient = 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)';
-const primaryGradientText = {
-  background: 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-};
-const particleGradient = 'linear-gradient(135deg, #e265e3 0%, #9861c5 100%)';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import {
+  primaryGradient,
+  primaryGradientText,
+  pinkToPurple,
+  particleGradient,
+} from "../ui/gradients";
 
 // Floating Particles Component
 const FloatingParticles = () => {
@@ -51,266 +47,50 @@ const FloatingParticles = () => {
   );
 };
 
-// Scrolling Text Animation Component
-const ScrollingText = () => {
-  const scrollTexts = [
-    "AI-Powered Transformation",
-    "Strategic Innovation",
-    "Business Automation",
-    "Growth Acceleration",
-    "Smart Solutions",
-  ];
+const services = [
+  {
+    title: "AI Voice Agents",
+    description: "Transform customer interactions with intelligent voice automation that operates 24/7. Our AI voice agents handle calls with natural, human-like conversations, manage inquiries, schedule appointments, and provide instant support—never missing a call or opportunity.",
+    number: "01",
+  },
+  {
+    title: "Custom AI Software Development",
+    description: "Purpose-built AI solutions engineered specifically for your business. We analyze your unique workflows, challenges, and goals to create intelligent systems that integrate seamlessly with your operations and deliver measurable improvements.",
+    number: "02",
+  },
+  {
+    title: "Workflow Automation",
+    description: "Eliminate repetitive tasks and optimize business processes with intelligent automation. From data entry to complex multi-step workflows, we help you reclaim time, reduce errors, and focus your team on high-value activities that drive growth.",
+    number: "03",
+  },
+  {
+    title: "Appointment Scheduling",
+    description: "Automated booking systems that manage your calendar intelligently. Reduce no-shows with smart reminders, handle rescheduling seamlessly, and ensure optimal scheduling—all while providing a frictionless experience for your clients.",
+    number: "04",
+  },
+  {
+    title: "AI Chatbots & Virtual Assistants",
+    description: "Deploy conversational AI that provides instant, personalized support across all customer touchpoints. Our chatbots learn from interactions, handle complex queries, and scale to manage thousands of conversations simultaneously.",
+    number: "05",
+  },
+  {
+    title: "Email & Communication Automation",
+    description: "Streamline your communication workflows with intelligent email management. Automate responses, prioritize important messages, trigger personalized follow-ups, and ensure no customer inquiry goes unanswered.",
+    number: "06",
+  },
+  {
+    title: "Review Management",
+    description: "Build and protect your online reputation with automated review systems. Collect customer feedback at the perfect moment, respond promptly to reviews, and turn satisfied customers into brand advocates—all on autopilot.",
+    number: "07",
+  },
+];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % scrollTexts.length);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="relative h-16 sm:h-20 md:h-24 overflow-hidden">
-      {scrollTexts.map((text, index) => (
-        <motion.div
-          key={index}
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{
-            y: index === currentIndex ? 0 : index < currentIndex ? -100 : 100,
-            opacity: index === currentIndex ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <h3
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold"
-            style={primaryGradientText}
-          >
-            {text}
-          </h3>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
-
-// Modern Icon Component
-
-interface ModernIconProps {
-  type: "target" | "lightning" | "growth"; // only these three are valid
-  isActive: boolean;
-}
-
-const ModernIcon: React.FC<ModernIconProps> = ({ type, isActive }) => {
-
-  if (type === "target") {
-    return (
-      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
-        {[0, 1, 2].map((ring) => (
-          <motion.div
-            key={ring}
-            className="absolute inset-0 border-4 rounded-full"
-            style={{
-              borderColor: ring === 1 ? '#e265e3' : '#9861c5',
-              transform: `scale(${1 - ring * 0.25})`,
-            }}
-            animate={isActive ? {
-              scale: [1 - ring * 0.25, 1 - ring * 0.25 + 0.1, 1 - ring * 0.25],
-              opacity: [0.4, 1, 0.4],
-            } : {}}
-            transition={{
-              duration: 2,
-              delay: ring * 0.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
-          animate={isActive ? {
-            scale: [1, 1.2, 1],
-          } : {}}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div
-            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full"
-            style={{ background: primaryGradient }}
-          />
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (type === "lightning") {
-    return (
-      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full"
-          style={{ filter: 'drop-shadow(0 0 20px rgba(226, 101, 227, 0.5))' }}
-        >
-          <motion.path
-            d="M50 10 L35 45 L50 45 L40 90 L75 45 L55 45 L65 10 Z"
-            fill="url(#lightning-gradient)"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={isActive ? {
-              pathLength: [0, 1, 1],
-              opacity: [0, 1, 1],
-            } : { pathLength: 1, opacity: 1 }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatDelay: 0.5,
-              ease: "easeInOut",
-            }}
-          />
-          <defs>
-            <linearGradient id="lightning-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#e265e3" />
-              <stop offset="100%" stopColor="#9861c5" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "growth") {
-    return (
-      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
-        <svg viewBox="0 0 100 100" className="w-full h-full">
-          {[20, 35, 50, 65, 80].map((height, index) => (
-            <motion.rect
-              key={index}
-              x={10 + index * 18}
-              y={100 - height}
-              width="12"
-              height={height}
-              fill="url(#bar-gradient)"
-              rx="2"
-              initial={{ height: 0, y: 100 }}
-              animate={isActive ? {
-                height: [0, height, height],
-                y: [100, 100 - height, 100 - height],
-                opacity: [0.5, 1, 0.5],
-              } : { height, y: 100 - height, opacity: 1 }}
-              transition={{
-                duration: 1.5,
-                delay: index * 0.1,
-                repeat: Infinity,
-                repeatDelay: 0.5,
-                ease: "easeOut",
-              }}
-            />
-          ))}
-          <motion.path
-            d="M 15 85 Q 30 70, 45 60 T 75 25 T 95 15"
-            stroke="url(#line-gradient)"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={isActive ? {
-              pathLength: [0, 1, 1],
-            } : { pathLength: 1 }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 0.5,
-              ease: "easeInOut",
-            }}
-          />
-          <defs>
-            <linearGradient id="bar-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#e265e3" />
-              <stop offset="100%" stopColor="#9861c5" />
-            </linearGradient>
-            <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#e265e3" />
-              <stop offset="100%" stopColor="#9861c5" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    );
-  }
-
-  return null;
-};
-
-const IdentifySection = () => {
-  const containerRef = useRef(null);
+const Services = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  // Individual feature sections scroll progress
-  const feature1Ref = useRef(null);
-  const feature2Ref = useRef(null);
-  const feature3Ref = useRef(null);
-  
-  const feature1InView = useInView(feature1Ref, { amount: 0.5 });
-  const feature2InView = useInView(feature2Ref, { amount: 0.5 });
-  const feature3InView = useInView(feature3Ref, { amount: 0.5 });
-
-  // Create particles for the circular animation
-  const particleCount = 40;
-  const particles = Array.from({ length: particleCount }, (_, i) => {
-    const angle = (i / particleCount) * Math.PI * 2;
-    return {
-      id: i,
-      angle,
-      delay: i * 0.05,
-    };
-  });
-
-  type IconType = "target" | "lightning" | "growth";
-
-  interface Feature {
-    iconType: IconType;
-    title: string;
-    description: string;
-  }
-
-
-  const features: Feature[] = [
-    { 
-      iconType: "target", 
-      title: "Precision Analysis",
-      description: "Deep dive into your business processes to identify high-impact AI opportunities"
-    },
-    { 
-      iconType: "lightning", 
-      title: "Rapid Implementation",
-      description: "Fast-track deployment with proven methodologies and cutting-edge tools"
-    },
-    { 
-      iconType: "growth", 
-      title: "Measurable Results",
-      description: "Track ROI and business impact with comprehensive analytics and reporting"
-    }
-  ];
-
   return (
-    <div 
-      ref={containerRef}
-      className="relative bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden"
-    >
+    <div className="relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden">
       {/* Blur overlay that fades out */}
       <motion.div
         initial={{ opacity: 1, backdropFilter: "blur(20px)" }}
@@ -318,22 +98,18 @@ const IdentifySection = () => {
         transition={{ duration: 1.2, ease: "easeOut" }}
         className="absolute inset-0 z-20 bg-white/30 pointer-events-none"
       />
-      
+
       <div ref={sectionRef}>
         {/* Subtle dark gradient overlay at top */}
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/10 to-transparent pointer-events-none" />
-        
+
         {/* Floating Particles */}
         <FloatingParticles />
 
-        {/* Gradient Orbs - Subtle */}
+        {/* Gradient Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div
-            className="absolute -top-40 -left-40 w-80 h-80 rounded-full blur-3xl"
-            style={{
-              background: particleGradient,
-              opacity: 0.2,
-            }}
+            className="absolute -top-40 -left-40 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.2, 0.4, 0.2],
@@ -345,11 +121,7 @@ const IdentifySection = () => {
             }}
           />
           <motion.div
-            className="absolute top-1/2 -right-40 w-96 h-96 rounded-full blur-3xl"
-            style={{
-              background: 'linear-gradient(135deg, #9861c5 0%, #e265e3 100%)',
-              opacity: 0.2,
-            }}
+            className="absolute top-1/2 -right-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
             animate={{
               scale: [1.3, 1, 1.3],
               opacity: [0.4, 0.2, 0.4],
@@ -364,232 +136,170 @@ const IdentifySection = () => {
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10">
-          {/* Hero Section - Full Screen */}
-          <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-            {/* Scrolling Animated Text */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="mb-8"
-            >
-              <ScrollingText />
-            </motion.div>
-
-            {/* Central Circle with "Identify" */}
-            <div className="w-full max-w-3xl">
-              <div className="relative w-full aspect-square max-w-md mx-auto flex items-center justify-center scale-90">
-                {/* Circular Particle Ring */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {particles.map((particle) => {
-                    const radius = 40;
-                    const x = Math.cos(particle.angle) * radius;
-                    const y = Math.sin(particle.angle) * radius;
-
-                    return (
-                      <motion.div
-                        key={particle.id}
-                        className="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full"
-                        style={{
-                          left: '50%',
-                          top: '50%',
-                          background: particleGradient,
-                        }}
-                        initial={{
-                          x: `${x}%`,
-                          y: `${y}%`,
-                          opacity: 0,
-                        }}
-                        animate={{
-                          x: `${x}%`,
-                          y: `${y}%`,
-                          opacity: [0.3, 1, 0.3],
-                          scale: [0.8, 1.3, 0.8],
-                        }}
-                        transition={{
-                          opacity: {
-                            duration: 3,
-                            delay: particle.delay,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          },
-                          scale: {
-                            duration: 3,
-                            delay: particle.delay,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          },
-                          x: {
-                            duration: 0.5,
-                            delay: particle.delay,
-                          },
-                          y: {
-                            duration: 0.5,
-                            delay: particle.delay,
-                          },
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-
-                {/* Center Content */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 1, delay: 0.9 }}
-                  className="relative z-10 text-center px-4"
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32">
+          {/* Header Section */}
+          <div className="max-w-6xl mx-auto text-center mb-16 sm:mb-20 md:mb-28">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+               className=" text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl
+    font-light text-gray-800
+    leading-[1.35]
+    mb-4"
+>
+              <span className="inline-block">Empowering&nbsp;</span>
+              <span
+                className="inline-block py-[0.12em]"
+                style={primaryGradientText}
                 >
-                  <motion.h1
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold mb-6 sm:mb-8 md:mb-10"
-                    style={primaryGradientText}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    Identify
-                  </motion.h1>
+                Businesses
+            </span>
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.8, delay: 1.1 }}
-                    className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-gray-700 font-light max-w-3xl mx-auto leading-relaxed px-2"
-                  >
-                    We pinpoint AI opportunities that will transform your business
-                  </motion.p>
+            <br className="hidden sm:block" />
+            <span className="inline-block">with&nbsp;</span>
+            <span
+                className="inline-block py-[0.12em]"
+                style={primaryGradientText}
+                >
+                Intelligent Solutions
+            </span>
+            </motion.h2>
 
-                  {/* Decorative underline */}
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 font-light max-w-4xl mx-auto px-4"
+            >
+              AI-powered automation that helps you work smarter, scale faster, and reduce operational costs by up to 70%
+            </motion.p>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.4 }}
+            //   className="mt-8 sm:mt-12 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full"
+            className="mt-8 sm:mt-12 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom"
+
+            //   style={{
+            //     background: primaryGradient,
+            //   }}
+            
+            />
+          </div>
+
+          {/* Services List */}
+          <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8 md:space-y-12">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="relative">
+                  {/* Number and Title Row */}
+                  <div className="flex items-start gap-4 sm:gap-6 md:gap-8 mb-3 sm:mb-4">
+                    {/* Large Number */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
+                      className="flex-shrink-0"
+                    >
+                      <span
+                        className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light opacity-40 group-hover:opacity-60 transition-opacity duration-300"
+                        style={primaryGradientText}
+                      >
+                        {service.number}
+                      </span>
+                    </motion.div>
+
+                    {/* Title and Description */}
+                    <div className="flex-1 pt-2 sm:pt-3 md:pt-4">
+                      <motion.h3
+                        whileHover={{ x: 5 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-3 sm:mb-4 md:mb-5"
+                        style={primaryGradientText}
+                      >
+                        {service.title}
+                      </motion.h3>
+
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+                        className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 font-light leading-relaxed max-w-3xl"
+                      >
+                        {service.description}
+                      </motion.p>
+                    </div>
+                  </div>
+
+                  {/* Animated Bottom Border */}
                   <motion.div
                     initial={{ scaleX: 0 }}
-                    animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                    transition={{ duration: 1, delay: 1.3 }}
-                    className="mt-6 sm:mt-8 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full"
-                    style={{
-                      background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
-                    }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: index * 0.1 + 0.4 }}
+                    className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent origin-left"
                   />
-                </motion.div>
 
-                {/* Glow effect behind text */}
-                <motion.div
-                  className="absolute inset-0 -z-10 flex items-center justify-center"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.2, 0.4, 0.2],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <div
-                    className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full blur-3xl"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(226,101,227,0.15) 0%, rgba(152,97,197,0.1) 50%, transparent 70%)',
-                    }}
+                  {/* Hover Effect Line */}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                    // className="absolute bottom-0 left-0 right-0 h-0.5 origin-left"
+                    // style={{
+                    //   background: primaryGradient,
+                    // }}
+                    className="absolute bottom-0 left-0 right-0 h-0.5 origin-left bg-gradient-to-r from-pinkcustom to-purplecustom"
+
                   />
-                </motion.div>
-              </div>
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Feature 1 - Full Screen */}
-          <div ref={feature1Ref} className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={feature1InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center max-w-2xl"
-            >
-              <div className="flex justify-center mb-8">
-                <ModernIcon type={features[0].iconType} isActive={feature1InView} />
-              </div>
-              <h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-                style={primaryGradientText}
-              >
-                {features[0].title}
-              </h2>
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                {features[0].description}
-              </p>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={feature1InView ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="mt-8 mx-auto w-24 sm:w-32 h-1 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
-                }}
-              />
-            </motion.div>
-          </div>
+          {/* Bottom Statement */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center mt-20 sm:mt-24 md:mt-32"
+          >
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 font-light leading-relaxed">
+              <span className="inline-block">Technology that&nbsp;</span>
+              <span className="inline-block" style={primaryGradientText}>learns, adapts,</span>
+              <br className="hidden sm:block" />
+              <span className="inline-block">and&nbsp;</span>
+              <span className="inline-block" style={primaryGradientText}>grows with your business</span>
+            </p>
 
-          {/* Feature 2 - Full Screen */}
-          <div ref={feature2Ref} className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={feature2InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center max-w-2xl"
-            >
-              <div className="flex justify-center mb-8">
-                <ModernIcon type={features[1].iconType} isActive={feature2InView} />
-              </div>
-              <h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-                style={primaryGradientText}
-              >
-                {features[1].title}
-              </h2>
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                {features[1].description}
-              </p>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={feature2InView ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="mt-8 mx-auto w-24 sm:w-32 h-1 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
-                }}
-              />
-            </motion.div>
-          </div>
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2 }}
+            //   className="mt-8 sm:mt-10 md:mt-12 mx-auto w-32 sm:w-40 md:w-48 h-1 rounded-full"
+            //   style={{
+            //     background: primaryGradient,
+            //   }}
+            className="mt-8 sm:mt-10 md:mt-12 mx-auto w-32 sm:w-40 md:w-48 h-1 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom"
 
-          {/* Feature 3 - Full Screen */}
-          <div ref={feature3Ref} className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={feature3InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center max-w-2xl"
-            >
-              <div className="flex justify-center mb-8">
-                <ModernIcon type={features[2].iconType} isActive={feature3InView} />
-              </div>
-              <h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-                style={primaryGradientText}
-              >
-                {features[2].title}
-              </h2>
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                {features[2].description}
-              </p>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={feature3InView ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="mt-8 mx-auto w-24 sm:w-32 h-1 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
-                }}
-              />
-            </motion.div>
-          </div>
+            />
+          </motion.div>
         </div>
       </div>
 
@@ -599,4 +309,4 @@ const IdentifySection = () => {
   );
 };
 
-export default IdentifySection;
+export default Services;
