@@ -99,6 +99,156 @@ const ScrollingText = () => {
   );
 };
 
+
+// Modern Icon Component
+
+interface ModernIconProps {
+  type: "target" | "lightning" | "growth"; // only these three are valid
+  isActive: boolean;
+}
+
+const ModernIcon: React.FC<ModernIconProps> = ({ type, isActive }) => {
+
+  if (type === "target") {
+    return (
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
+        {[0, 1, 2].map((ring) => (
+          <motion.div
+            key={ring}
+            className="absolute inset-0 border-4 rounded-full"
+            style={{
+              borderColor: ring === 1 ? '#e265e3' : '#9861c5',
+              transform: `scale(${1 - ring * 0.25})`,
+            }}
+            animate={isActive ? {
+              scale: [1 - ring * 0.25, 1 - ring * 0.25 + 0.1, 1 - ring * 0.25],
+              opacity: [0.4, 1, 0.4],
+            } : {}}
+            transition={{
+              duration: 2,
+              delay: ring * 0.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          animate={isActive ? {
+            scale: [1, 1.2, 1],
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full"
+            style={{ background: primaryGradient }}
+          />
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (type === "lightning") {
+    return (
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full"
+          style={{ filter: 'drop-shadow(0 0 20px rgba(226, 101, 227, 0.5))' }}
+        >
+          <motion.path
+            d="M50 10 L35 45 L50 45 L40 90 L75 45 L55 45 L65 10 Z"
+            fill="url(#lightning-gradient)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={isActive ? {
+              pathLength: [0, 1, 1],
+              opacity: [0, 1, 1],
+            } : { pathLength: 1, opacity: 1 }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatDelay: 0.5,
+              ease: "easeInOut",
+            }}
+          />
+          <defs>
+            <linearGradient id="lightning-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#e265e3" />
+              <stop offset="100%" stopColor="#9861c5" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "growth") {
+    return (
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          {[20, 35, 50, 65, 80].map((height, index) => (
+            <motion.rect
+              key={index}
+              x={10 + index * 18}
+              y={100 - height}
+              width="12"
+              height={height}
+              fill="url(#bar-gradient)"
+              rx="2"
+              initial={{ height: 0, y: 100 }}
+              animate={isActive ? {
+                height: [0, height, height],
+                y: [100, 100 - height, 100 - height],
+                opacity: [0.5, 1, 0.5],
+              } : { height, y: 100 - height, opacity: 1 }}
+              transition={{
+                duration: 1.5,
+                delay: index * 0.1,
+                repeat: Infinity,
+                repeatDelay: 0.5,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+          <motion.path
+            d="M 15 85 Q 30 70, 45 60 T 75 25 T 95 15"
+            stroke="url(#line-gradient)"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={isActive ? {
+              pathLength: [0, 1, 1],
+            } : { pathLength: 1 }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 0.5,
+              ease: "easeInOut",
+            }}
+          />
+          <defs>
+            <linearGradient id="bar-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#e265e3" />
+              <stop offset="100%" stopColor="#9861c5" />
+            </linearGradient>
+            <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#e265e3" />
+              <stop offset="100%" stopColor="#9861c5" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const IdentifySection = () => {
   const containerRef = useRef(null);
   const sectionRef = useRef(null);
@@ -129,19 +279,28 @@ const IdentifySection = () => {
     };
   });
 
-  const features = [
+  type IconType = "target" | "lightning" | "growth";
+
+  interface Feature {
+    iconType: IconType;
+    title: string;
+    description: string;
+  }
+
+
+  const features: Feature[] = [
     { 
-      icon: "🎯", 
+      iconType: "target", 
       title: "Precision Analysis",
       description: "Deep dive into your business processes to identify high-impact AI opportunities"
     },
     { 
-      icon: "⚡", 
+      iconType: "lightning", 
       title: "Rapid Implementation",
       description: "Fast-track deployment with proven methodologies and cutting-edge tools"
     },
     { 
-      icon: "📈", 
+      iconType: "growth", 
       title: "Measurable Results",
       description: "Track ROI and business impact with comprehensive analytics and reporting"
     }
@@ -277,40 +436,40 @@ const IdentifySection = () => {
 
                 {/* Center Content */}
                 <motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-  transition={{ duration: 1, delay: 0.9 }}
-  className="relative z-10 text-center px-4"
->
-  <motion.h1
-    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold mb-6 sm:mb-8 md:mb-10"
-    style={primaryGradientText}
-    whileHover={{ scale: 1.05 }}
-    transition={{ duration: 0.3 }}
-  >
-    Identify
-  </motion.h1>
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 1, delay: 0.9 }}
+                  className="relative z-10 text-center px-4"
+                >
+                  <motion.h1
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold mb-6 sm:mb-8 md:mb-10"
+                    style={primaryGradientText}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Identify
+                  </motion.h1>
 
-  <motion.p
-    initial={{ opacity: 0, y: 20 }}
-    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-    transition={{ duration: 0.8, delay: 1.1 }}
-    className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-gray-700 font-light max-w-3xl mx-auto leading-relaxed px-2"
-  >
-    We pinpoint AI opportunities that will transform your business
-  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ duration: 0.8, delay: 1.1 }}
+                    className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-gray-700 font-light max-w-3xl mx-auto leading-relaxed px-2"
+                  >
+                    We pinpoint AI opportunities that will transform your business
+                  </motion.p>
 
-  {/* Decorative underline */}
-  <motion.div
-    initial={{ scaleX: 0 }}
-    animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-    transition={{ duration: 1, delay: 1.3 }}
-    className="mt-6 sm:mt-8 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full"
-    style={{
-      background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
-    }}
-  />
-</motion.div>
+                  {/* Decorative underline */}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+                    transition={{ duration: 1, delay: 1.3 }}
+                    className="mt-6 sm:mt-8 mx-auto w-24 sm:w-32 md:w-40 h-1 rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, #e265e3 0%, #9861c5 100%)',
+                    }}
+                  />
+                </motion.div>
 
                 {/* Glow effect behind text */}
                 <motion.div
@@ -344,19 +503,9 @@ const IdentifySection = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-center max-w-2xl"
             >
-              <motion.div
-                animate={feature1InView ? {
-                  scale: [1, 1.2, 1],
-                } : {}}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="text-7xl sm:text-8xl md:text-9xl mb-8"
-              >
-                {features[0].icon}
-              </motion.div>
+              <div className="flex justify-center mb-8">
+                <ModernIcon type={features[0].iconType} isActive={feature1InView} />
+              </div>
               <h2 
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
                 style={primaryGradientText}
@@ -386,19 +535,9 @@ const IdentifySection = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-center max-w-2xl"
             >
-              <motion.div
-                animate={feature2InView ? {
-                  scale: [1, 1.2, 1],
-                } : {}}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="text-7xl sm:text-8xl md:text-9xl mb-8"
-              >
-                {features[1].icon}
-              </motion.div>
+              <div className="flex justify-center mb-8">
+                <ModernIcon type={features[1].iconType} isActive={feature2InView} />
+              </div>
               <h2 
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
                 style={primaryGradientText}
@@ -428,19 +567,9 @@ const IdentifySection = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-center max-w-2xl"
             >
-              <motion.div
-                animate={feature3InView ? {
-                  scale: [1, 1.2, 1],
-                } : {}}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="text-7xl sm:text-8xl md:text-9xl mb-8"
-              >
-                {features[2].icon}
-              </motion.div>
+              <div className="flex justify-center mb-8">
+                <ModernIcon type={features[2].iconType} isActive={feature3InView} />
+              </div>
               <h2 
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
                 style={primaryGradientText}
