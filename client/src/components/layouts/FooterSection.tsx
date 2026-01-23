@@ -335,7 +335,7 @@ const copyNumber = async () => {
                   <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
                     © 2025 Your Company. All rights reserved.
                   </p>
-                  <div className="flex gap-4 sm:gap-6">
+                  {/* <div className="flex gap-4 sm:gap-6">
                     <a
                       href="/aboutus"
                       className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300"
@@ -348,7 +348,7 @@ const copyNumber = async () => {
                     >
                       Terms of Service
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </motion.div>
             </motion.div>
