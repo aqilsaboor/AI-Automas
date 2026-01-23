@@ -17,11 +17,27 @@ const Navbar = () => {
             transition={{ duration: 0.5 }}
             className="flex items-center"
           >
-            <img 
+            {/* <img 
                src="/logos/FullLogo.png"
                 alt="SimpliScale"
                 className="h-36 sm:h-40 md:h-42 w-auto"
+            /> */}
+
+            <div
+              className="h-36 sm:h-40 md:h-42 w-[220px] sm:w-[260px] md:w-[300px] 
+                        bg-gradient-to-r from-[#e265e3] to-[#9861c5]"
+              style={{
+                WebkitMaskImage: "url('/logos/FullLogo.png')",
+                WebkitMaskRepeat: "no-repeat",
+                WebkitMaskSize: "contain",
+                WebkitMaskPosition: "center",
+                maskImage: "url('/logos/FullLogo.png')",
+                maskRepeat: "no-repeat",
+                maskSize: "contain",
+                maskPosition: "center",
+              }}
             />
+
             <span className="ml-3 text-xl sm:text-2xl font-semibold text-white">
             </span>
           </motion.div>
