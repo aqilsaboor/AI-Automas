@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
@@ -79,7 +81,7 @@ const [notification, setNotification] = useState<{
 
   const handleSubmit = async () => {
   try {
-    const response = await axios.post("http://localhost:5000/api/contact", formData, {
+    const response = await axios.post(`${API_BASE_URL}/api/contact`, formData, {
       headers: { "Content-Type": "application/json" }
     });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Phone, X } from 'lucide-react';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface StarLayerProps {
   count: number;
@@ -105,7 +106,7 @@ const Hero = () => {
   if (!phoneNumber.trim()) return;
 
   try {
-    const res = await fetch("http://localhost:5000/api/call/call", {
+    const res = await fetch(`${API_BASE_URL}/api/call/call`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phone: phoneNumber }),
