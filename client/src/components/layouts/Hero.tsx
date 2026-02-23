@@ -4,6 +4,8 @@ import { Phone, X } from 'lucide-react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const DIRECT_PHONE = "+1 234 567 890"; // change to your real number
+
 interface StarLayerProps {
   count: number;
   size: number;
@@ -93,6 +95,7 @@ const Hero = () => {
   const [showCallModal, setShowCallModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [notification, setNotification] = useState<{show: boolean, message: string, type: 'success' | 'error'}>({show: false, message: '', type: 'success'});
+  const [copied, setCopied] = useState(false);
   const words = ['Software', 'Platform', 'Solution', 'Tool'];
   
   useEffect(() => {
@@ -129,6 +132,15 @@ const Hero = () => {
   }
 };
 
+const handleCopy = async () => {
+  try {
+    await navigator.clipboard.writeText(DIRECT_PHONE);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  } catch (err) {
+    console.error("Failed to copy number");
+  }
+};
 
   return (
     <StarsBackground>
@@ -220,6 +232,46 @@ const Hero = () => {
                     >
                       Call Now
                     </motion.button>
+
+                    {/* OR Divider */}
+                    <div className="relative my-4">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase tracking-widest text-gray-400 bg-white px-3">
+                        or
+                      </div>
+                    </div>
+
+                    {/* Direct Phone Option */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom text-white">
+                          <Phone size={16} />
+                        </div>
+
+                        {/* Click-to-call on mobile */}
+                        <a
+                          href={`tel:${DIRECT_PHONE}`}
+                          className="font-medium text-gray-800 text-sm sm:text-base"
+                        >
+                          {DIRECT_PHONE}
+                        </a>
+                      </div>
+
+                      <motion.button
+                        onClick={handleCopy}
+                        whileTap={{ scale: 0.95 }}
+                        className="text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-pinkcustom to-purplecustom text-white shadow-md"
+                      >
+                        {copied ? "Copied!" : "Copy"}
+                      </motion.button>
+                    </motion.div>
 
                     <p className="text-xs text-gray-500 text-center">
                       We'll connect you with our team right away
