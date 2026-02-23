@@ -17,6 +17,12 @@ export default function ContactForm() {
     message: ''
   });
 
+const Optional = () => (
+  <span className="ml-1 text-sm font-normal text-gray-400">
+    (optional)
+  </span>
+);
+
 const [notification, setNotification] = useState<{
   type: 'success' | 'error' | '';
   message: string;
@@ -176,7 +182,7 @@ const [notification, setNotification] = useState<{
           {/* Phone */}
           <div className="mb-6">
             <label className="block text-base font-medium text-gray-900 mb-2">
-              What is your phone?
+              What is your phone? <Optional />
             </label>
             <input
               type="tel"
@@ -191,7 +197,7 @@ const [notification, setNotification] = useState<{
           {/* Role */}
           <div className="mb-6">
             <label className="block text-base font-medium text-gray-900 mb-2">
-              What is your role in the company?
+              What is your role in the company? <Optional />
             </label>
             <input
               type="text"
@@ -207,7 +213,7 @@ const [notification, setNotification] = useState<{
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-base font-medium text-gray-900 mb-2">
-                Company Name
+                Company Name <Optional />
               </label>
               <input
                 type="text"
@@ -220,7 +226,7 @@ const [notification, setNotification] = useState<{
             </div>
             <div>
               <label className="block text-base font-medium text-gray-900 mb-2">
-                Company Website
+                Company Website <Optional />
               </label>
               <input
                 type="url"
@@ -237,7 +243,7 @@ const [notification, setNotification] = useState<{
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="relative">
               <label className="block text-base font-medium text-gray-900 mb-2">
-                Company Size
+                Company Size <Optional />
               </label>
               <button
                 type="button"
@@ -266,7 +272,7 @@ const [notification, setNotification] = useState<{
             </div>
             <div className="relative">
               <label className="block text-base font-medium text-gray-900 mb-2">
-                Company's Annual Revenue
+                Company's Annual Revenue <Optional />
               </label>
               <button
                 type="button"
@@ -298,7 +304,7 @@ const [notification, setNotification] = useState<{
           {/* Project Budget */}
           <div className="relative mb-6">
             <label className="block text-base font-medium text-gray-900 mb-2">
-              Project budget
+              Project budget <Optional />
             </label>
             <button
               type="button"
@@ -329,7 +335,7 @@ const [notification, setNotification] = useState<{
           {/* Services */}
           <div className="relative mb-6">
             <label className="block text-base font-medium text-gray-900 mb-2">
-              What services are you interested in?
+              What services are you interested in? <Optional />
             </label>
             <button
               type="button"
@@ -360,7 +366,7 @@ const [notification, setNotification] = useState<{
           {/* Message */}
           <div className="mb-8">
             <label className="block text-base font-medium text-gray-900 mb-2">
-              Message
+              Message <Optional />
             </label>
             <textarea
               name="message"
@@ -377,7 +383,7 @@ const [notification, setNotification] = useState<{
             onClick={handleSubmit}
             className="w-full bg-black text-white py-4 rounded-lg text-lg font-medium hover:bg-gray-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
-            Submit
+            Submit 
           </button>
         </div>
       </div>
