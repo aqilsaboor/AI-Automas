@@ -61,13 +61,13 @@ const [notification, setNotification] = useState<{
   ];
 
   const services = [
-    'Web Development',
-    'Mobile App Development',
-    'UI/UX Design',
-    'Digital Marketing',
-    'Cloud Services',
-    'Consulting',
-    'Other'
+    'AI Voice Agents',
+    'Custom AI Software Development',
+    'Workflow Automation',
+    'Appointment Scheduling',
+    'AI Chatbots & Virtual Assistants',
+    'Email & Communication Automation',
+    'Review Management'
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
